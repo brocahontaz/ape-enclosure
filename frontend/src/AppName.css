@@ -1,0 +1,27 @@
+.AppName {
+  box-sizing: border-box;
+  height: 100%;
+  padding-left: 20px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  /*align-items: center;*/
+  justify-content: center;
+}
+
+.AppName a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.AppName a:hover, a:active, a:focus, a:visited, a:link {
+  text-decoration: none;
+}
+
+.AppName .name {
+  font-size: 1.0rem;
+}
+
+.AppName .realm {
+  font-size: 0.7rem;
+}
