@@ -7,6 +7,14 @@ nav {
   flex-direction: column;
 }
 
+nav.open {
+  width: 300px;
+}
+
+nav.closed {
+  width: 80px;
+}
+
 nav ul {
   list-style-type: none;
   margin: 0;

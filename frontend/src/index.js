@@ -4,16 +4,20 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import './index.css'
 import App from './App'
-import Store from './redux/Store'
+import store from './redux/store'
 
+const rootElement = document.getElementById('root')
+
+console.log('store', store)
 
 ReactDOM.render(
-  <Provider store={Store}>
+  <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
+,
+  rootElement
 )

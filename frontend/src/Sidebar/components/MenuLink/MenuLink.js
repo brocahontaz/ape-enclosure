@@ -30,10 +30,10 @@ const getIcon = (name) => {
   }
 }
 
-const MenuLink = ({text, url}) =>
+const MenuLink = ({large, text, url, likey}) =>
   <li className='link'>
     <NavLink exact to={url} className='MenuLink' activeClassName='ActiveLink'>
-      <FontAwesomeIcon icon={getIcon(text)} className='MenuIcon'/> {text}
+      <FontAwesomeIcon icon={getIcon(text)} className='MenuIcon'/> {large && text}
     </NavLink>
   </li>
 

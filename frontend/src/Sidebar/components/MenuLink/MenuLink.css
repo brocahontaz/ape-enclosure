@@ -1,9 +1,11 @@
 li.link {
   width: 100%;
+  height: 36px;
 }
 
 .MenuLink {
-  display: inline-block;
+  display: grid;
+  grid-template-columns: 40px auto;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -25,5 +27,5 @@ li.link {
 }
 
 .MenuIcon {
-  margin-right: 10px;
+  font-size: 0.9rem;
 }

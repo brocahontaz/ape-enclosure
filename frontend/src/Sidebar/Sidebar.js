@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
 import './Sidebar.css'
 
 import MenuLink from './components/MenuLink'
@@ -49,22 +49,30 @@ const raidLinks = [
   }
 ]
 
-const Sidebar = () =>
-  <nav>
+const Sidebar = ({ open }) =>
+  <nav className={open ? 'open' : 'closed'}>
     <ul>
-      <li className='header'>General</li>
+      <li className='header' key='menuGeneral'>{open ? 'General' : 'Gnrl'}</li>
       {generalNavLinks.map(item =>
-        <MenuLink text={item.name} url={item.url} />
+        <MenuLink large={open} text={item.name} url={item.url} key={'menu'+item.name}/>
       )}
-      <li className='header'>Spreadsheet</li>
+      <li className='header' key='menuSpreadsheet'>{open ? 'Spreadsheet' : 'Sheet'}</li>
       {spreadSheetLinks.map(item => 
-        <MenuLink text={item.name} url={item.url} />
+        <MenuLink large={open} text={item.name} url={item.url} key={'menu'+item.name}/>
       )}
-      <li className='header'>Raids</li>
+      <li className='header' key='menuRaids'>Raids</li>
       {raidLinks.map(item => 
-        <MenuLink text={item.name} url={item.url} />
+        <MenuLink large={open} text={item.name} url={item.url} key={'menu'+item.name}/>
       )}
     </ul>
   </nav>
 
-export default Sidebar
+const mapStateToProps = (state) => {
+  return {
+    open: state.menu.open
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(Sidebar)

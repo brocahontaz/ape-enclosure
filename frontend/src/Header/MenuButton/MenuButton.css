@@ -1,0 +1,25 @@
+.MenuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.2rem;
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.MenuButton:hover {
+  background: var(--button-hover);
+}
+
+.MenuButton:active {
+  background: var(--button-click);
+}
