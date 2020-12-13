@@ -19,6 +19,33 @@ const app = express()
 const server = http.createServer(app)
 const io = socket.listen(server)
 
+const credentials = {
+  client: {
+    id: process.env.BLIZZ_CLIENT_ID,
+    secret: process.env.BLIZZ_CLIENT_SECRET
+  },
+  auth: {
+    tokenHost: process.env.BLIZZ_TOKEN_URL
+  }
+}
+
+const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2')
+let token = null
+
+const getToken = async () => {
+  try {
+    if (token === null ||| token.expired)
+    const client = new ClientCredentials(credentials)
+    const tokenData = await client.getToken()
+    token = tokenData.token
+    console.log(tokenData)
+    console.log(token)
+    return token
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 // Set up logger
 app.use(logger('dev'))
 
@@ -28,6 +55,7 @@ app.use(express.json())
 
 // Set up routes
 app.use('/', require('./routes/homeRouter'))
+app.use('/roster', require('./routes/rosterRouter'))
 
 // Set up socket middleware
 app.use((event, req, res, next) => {

@@ -27,7 +27,7 @@ let token = null
 const homeController = {}
 
 /**
- * Render the home page, with all issues.
+ * Endpoint
  *
  * @param {object} req the Express request object
  * @param {object} res the Express response object
@@ -35,9 +35,6 @@ const homeController = {}
  */
 homeController.index = async (req, res, next) => {
   try {
-    // const token = await getToken()
-
-    console.log(token)
 
     res.json({ message: 'Welcome to the Ape Enclosure api! :)', token: token })
   } catch (err) {
@@ -45,13 +42,14 @@ homeController.index = async (req, res, next) => {
   }
 }
 
-async function getToken () {
+const getToken = async () => {
   try {
     const client = new ClientCredentials(credentials)
     const tokenData = await client.getToken()
     token = tokenData.token.access_token
-    console.log('token', token.token.access_token)
-    // return token
+    console.log(tokenData)
+    console.log(token)
+    return token
   } catch (err) {
     console.log(err)
   }

@@ -2,11 +2,13 @@ version: '3.7'
 
 services:
   backend:
-    build: ./backend
+    build: ./rest-api
     ports:
       - 8080:8080
     env_file:
       - rest-api/.env
+    volumes:
+      - ./rest-api:/backend
   frontend:
     build: ./frontend
     environment:
