@@ -11,19 +11,6 @@ require('dotenv').config()
 // const fetch = require('node-fetch')
 // const axios = require('axios')
 
-const credentials = {
-  client: {
-    id: process.env.BLIZZ_CLIENT_ID,
-    secret: process.env.BLIZZ_CLIENT_SECRET
-  },
-  auth: {
-    tokenHost: process.env.BLIZZ_TOKEN_URL
-  }
-}
-
-const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2')
-let token = null
-
 const homeController = {}
 
 /**
@@ -35,26 +22,10 @@ const homeController = {}
  */
 homeController.index = async (req, res, next) => {
   try {
-
-    res.json({ message: 'Welcome to the Ape Enclosure api! :)', token: token })
+    res.json({ message: 'Welcome to the Ape Enclosure api! :)', token: res.locals.token.access_token })
   } catch (err) {
     next(err)
   }
 }
-
-const getToken = async () => {
-  try {
-    const client = new ClientCredentials(credentials)
-    const tokenData = await client.getToken()
-    token = tokenData.token.access_token
-    console.log(tokenData)
-    console.log(token)
-    return token
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-getToken()
 
 module.exports = homeController

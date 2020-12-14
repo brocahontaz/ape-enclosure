@@ -30,16 +30,18 @@ const credentials = {
 }
 
 const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2')
+const { runInNewContext } = require('vm')
 let token = null
 
 const getToken = async () => {
   try {
-    if (token === null ||| token.expired)
-    const client = new ClientCredentials(credentials)
-    const tokenData = await client.getToken()
-    token = tokenData.token
-    console.log(tokenData)
-    console.log(token)
+    if (token === null || token.expired) {
+      const client = new ClientCredentials(credentials)
+      const tokenData = await client.getToken()
+      token = tokenData.token
+      // console.log(tokenData)
+      console.log(token)
+    }
     return token
   } catch (err) {
     console.log(err)
@@ -52,6 +54,11 @@ app.use(logger('dev'))
 // Set up body usage
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+
+app.use(async (req, res, next) => {
+  res.locals.token = await getToken()
+  next()
+})
 
 // Set up routes
 app.use('/', require('./routes/homeRouter'))

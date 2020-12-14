@@ -7,9 +7,26 @@
  */
 
 'use strict'
-const axios = require("axios");
+const axios = require('axios')
 
 const rosterController = {}
+
+const refreshRoster = async token => {
+  try {
+    console.log('tok', token)
+    const test = await axios.get('https://eu.api.blizzard.com/data/wow/guild/tarren-mill/ape-enclosure/roster', {
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Battlenet-Namespace': 'profile-eu'
+      }
+    })
+    console.log('roster', test)
+    return test.data.members
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 /**
  * Roster controller
@@ -19,11 +36,14 @@ const rosterController = {}
  * @param {object} next the Express forward object
  */
 rosterController.index = async (req, res, next) => {
+  console.log('test')
+  // res.json('test')
   try {
-    const test = await axios.get('eu.api.blizzard.com/data/wow/guild/tarrenmill/apeenclosure/roster')
-    console.log('roster', test)
+    const roster = await refreshRoster(res.locals.token.access_token)
+    // console.log(roster)
+    res.json(roster)
   } catch (err) {
-    next(err)
+    console.log(err)
   }
 }
 
