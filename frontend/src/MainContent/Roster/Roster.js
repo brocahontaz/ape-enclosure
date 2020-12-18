@@ -1,5 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import * as icon from '@fortawesome/free-solid-svg-icons'
 
 import './Roster.css'
 import RosterService from 'services/RosterService'
@@ -28,34 +30,58 @@ const Roster = () => {
 
   return(
     <div className='Roster'>
-      <h2>Roster</h2>
+      <h2> <FontAwesomeIcon icon={icon.faUserFriends}/> Roster</h2>
       <table>
         <thead>
           <tr>
-            <th>
-              Name
+            <th className='RoName'>
+              <button onClick={() => setRoster('name')}>
+                Name
+              </button>
             </th>
-            <th>
+            <th className='RoRealm'>
               Realm
             </th>
-            <th>
-              Role
+            <th className='RoRole'>
+              <button onClick={() => setRoster('role')}>
+                Role
+              </button>
+            </th>
+            <th className='RoRank'>
+              <button onClick={() => setRoster('rank')}>
+                Rank
+              </button>
+            </th>
+            <th className='RoLvl'>
+              <button onClick={() => setRoster('lvl')}>
+                Level
+              </button>
             </th>
             <th>
-              Rank
+              <button onClick={() => setRoster('log')}>
+                Last login
+              </button>
             </th>
-            <th>
-              Level
-            </th>
-            <th>
-              Updated
+            <th className='RoUpdated'>
+              <button onClick={() => setRoster('upd')}>
+                Updated
+              </button>
             </th>
           </tr>
         </thead>
         <tbody>
-          {roster.map(character => (
+          {roster.filter(character => (character.rank === 1 || character.rank === 2 || character.rank === 4)).map(character => (
             <tr key={character.id}>
-              <td>{character.name}</td>
+              <td>
+                <img src={character.activeSpecIcon} className='PlayerSpecIcon'/>
+                <span>{character.name}</span>
+              </td>
+              <td>{character.realm}</td>
+              <td>{character.role}</td>
+              <td>{character.rank}</td>
+              <td>{character.level}</td>
+              <td>{character.lastLogin}</td>
+              <td>{character.updatedAt}</td>
             </tr>
           ))}
         </tbody>

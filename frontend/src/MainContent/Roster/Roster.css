@@ -1,8 +1,86 @@
 .Roster {
-
+  display: flex;
+  flex-direction: column;
   color: white;
 }
 
 .Roster table {
-  
+  display: table;
+  margin-top: 20px;
+  width: 1000px;
+  align-self: stretch;
+  background: #414141;
+  border-collapse: collapse;
+  border-radius: 5px;
+}
+
+.Roster table thead tr {
+  text-align: left;
+  height: 50px;
+}
+
+.Roster table thead tr td {
+  padding: 10px;
+}
+
+.Roster table tbody tr {
+  font-size: 0.8rem;
+  height: 40px;
+  padding: 5px;
+  margin: 5px;
+  border: solid;
+  border-width: 1px 0;
+  border-color: #1e1e1e;
+}
+
+.Roster table tbody tr:first-child {
+  border-top: none;
+}
+.Roster table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.Roster td {
+  text-align: left; 
+  vertical-align: middle;
+}
+
+.Roster td span {
+  text-align: left; 
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.RoName {
+  width: 130px;
+  padding-left: 10px;
+}
+
+.RoRealm {
+  width: 100px;
+}
+
+.RoRole {
+  width: 100px;
+}
+
+.RoRank {
+  width: 50px;
+}
+
+.RoLvl {
+  width: 50px;
+}
+
+.RoUpdated {
+  width: auto;
+}
+
+.PlayerSpecIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid white;
+  margin-left: 10px;
+  vertical-align: middle;
 }
