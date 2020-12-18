@@ -13,6 +13,7 @@ const http = require('http')
 const express = require('express')
 const socket = require('socket.io')
 const logger = require('morgan')
+const mongoose = require('./configs/mongoose')
 
 // Set up server with http, express and socket.io
 const app = express()
@@ -30,7 +31,6 @@ const credentials = {
 }
 
 const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2')
-const { runInNewContext } = require('vm')
 let token = null
 
 const getToken = async () => {
@@ -51,9 +51,21 @@ const getToken = async () => {
 // Set up logger
 app.use(logger('dev'))
 
+// Connect to the database
+mongoose.connect().catch(error => {
+  console.error(error)
+  process.exit(1)
+})
+
 // Set up body usage
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
 app.use(async (req, res, next) => {
   res.locals.token = await getToken()

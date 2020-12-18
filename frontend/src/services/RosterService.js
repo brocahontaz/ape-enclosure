@@ -1,7 +1,7 @@
 import http from 'http-common'
 
 const getAll = () => {
-  return http.get('/roster/')
+  return http.get('roster')
 }
 
 const RosterService = {
