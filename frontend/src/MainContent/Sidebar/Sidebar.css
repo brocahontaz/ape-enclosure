@@ -1,10 +1,10 @@
 nav {
-  box-sizing: border-box;
-  width: 300px;
-  height: calc(100% - 50px);
-  background: var(--nav-background);
+  align-self: stretch;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  width: 300px;
+  background: var(--nav-background);
 }
 
 nav.open {

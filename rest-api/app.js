@@ -30,7 +30,7 @@ const credentials = {
   }
 }
 
-const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require('simple-oauth2')
+const { ClientCredentials } = require('simple-oauth2')
 let token = null
 
 const getToken = async () => {
