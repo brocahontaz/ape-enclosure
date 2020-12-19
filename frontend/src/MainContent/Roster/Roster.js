@@ -6,10 +6,10 @@ import * as icon from '@fortawesome/free-solid-svg-icons'
 import './Roster.css'
 import RosterService from 'services/RosterService'
 import useSortableData from 'hooks/useSortableData'
+import SortButton from './components/SortButton'
 
 const Roster = () => {
   const [roster, setRoster] = useState([])
-  //const [sortConfig, setSortConfig] = useState(null)
   const [test, setTest] = useState('')
 
   const { items, requestSort, sortConfig } = useSortableData(roster)
@@ -21,27 +21,6 @@ const Roster = () => {
     return sortConfig.key === name ? sortConfig.direction: undefined
   }
 
-/*
-  if (sortConfig) {
-    roster.sort((a,b ) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'ascending' ? -1 : 1
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'ascending' ? 1 : -1
-      }
-      return 0
-    })
-  }
-
-  const requestSort = key => {
-    let direction = 'ascending'
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending'
-    }
-    setSortConfig({key, direction})
-  }*/
-
   useEffect(() => {
     retrieveRoster()
   }, [])
@@ -52,8 +31,8 @@ const Roster = () => {
       const rost = await response.data
       console.log('rost!', rost)
       const sorted = rost.sort((a, b) => { 
-        if (a.name < b.name) { return -1 }
-        if (a.name > b.name) { return 1 }
+        if (a.rank < b.rank) { return -1 }
+        if (a.rank > b.rank) { return 1 }
        })
       console.log('sort', sorted)
       setRoster(rost)
@@ -65,6 +44,19 @@ const Roster = () => {
     }
   }
 
+  const getRank = rankId => {
+    switch(rankId) {
+      case 0:
+        return 'GM'
+      case 1:
+        return 'Officer'
+      case 3:
+        return 'Raider'
+      default:
+        return 'Plebeian'
+    }
+  }
+
   return(
     <div className='Roster'>
       <h2> <FontAwesomeIcon icon={icon.faUserFriends}/> Roster</h2>
@@ -72,42 +64,30 @@ const Roster = () => {
         <thead>
           <tr>
             <th className='RoName'>
-              <button onClick={() => requestSort('name')} className={getClassNamesFor('name')}>
-                Name
-              </button>
+              <SortButton name='Name' sort='name' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th className='RoRealm'>
               Realm
             </th>
             <th className='RoRole'>
-              <button onClick={() => requestSort('role')} className={getClassNamesFor('role')}>
-                Role
-              </button>
+              <SortButton name='Role' sort='role' click={requestSort} classSwitch={getClassNamesFor} />
             </th>
             <th className='RoRank'>
-              <button onClick={() => requestSort('rank')} className={getClassNamesFor('rank')}>
-                Rank
-              </button>
+              <SortButton name='Rank' sort='rank' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th className='RoLvl'>
-              <button onClick={() => requestSort('level')} className={getClassNamesFor('level')}>
-                Level
-              </button>
+              <SortButton name='Level' sort='level' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th>
-              <button onClick={() => requestSort('lastLogin')} className={getClassNamesFor('lastLogin')}>
-                Last login
-              </button>
+              <SortButton name='Last login' sort='lastLogin' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th className='RoUpdated'>
-              <button onClick={() => requestSort('updatedAt')} className={getClassNamesFor('updatedAt')}>
-                Updated
-              </button>
+              <SortButton name='Updated' sort='updatedAt' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
           </tr>
         </thead>
         <tbody>
-          {roster.filter(character => (character.rank === 0 || character.rank === 1 || character.rank === 2 || character.rank === 4)).map(character => (
+          {roster.filter(character => (character.rank === 0 || character.rank === 1 || character.rank === 3)).map(character => (
             <tr key={character.id}>
               <td>
                 <img src={character.activeSpecIcon} className='PlayerSpecIcon'/>
@@ -115,7 +95,7 @@ const Roster = () => {
               </td>
               <td>{character.realm}</td>
               <td>{character.role}</td>
-              <td>{character.rank}</td>
+              <td>{getRank(character.rank)}</td>
               <td>{character.level}</td>
               <td>{character.lastLogin}</td>
               <td>{character.updatedAt}</td>
