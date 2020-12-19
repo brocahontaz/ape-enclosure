@@ -10,7 +10,11 @@ const generalNavLinks = [
     url: '/'
   },
   {
-    name: 'Roster',
+    name: 'Raid team',
+    url: '/team'
+  },
+  {
+    name: 'Members',
     url: '/roster'
   },
   {

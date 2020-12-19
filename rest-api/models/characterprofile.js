@@ -102,7 +102,7 @@ const CharacterProfileSchema = new mongoose.Schema({
     unique: true
   },
   renown: {
-    type: String,
+    type: Number,
     required: true,
     unique: false
   },
@@ -118,6 +118,22 @@ const CharacterProfileSchema = new mongoose.Schema({
 CharacterProfileSchema.statics.updateChar = async function (id, data) {
   try {
     return await this.update({ id: id }, data, { upsert: true, setDefaultsOnInsert: true })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+CharacterProfileSchema.statics.getRoster = async function () {
+  try {
+    return await this.find()
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+CharacterProfileSchema.statics.getTeam = async function () {
+  try {
+    return await this.find({ rank: { $in: [0, 1, 3] } })
   } catch (err) {
     console.log(err)
   }

@@ -9,7 +9,9 @@ const getIcon = (name) => {
   switch(name) {
     case 'Dashboard':
       return icon.faAnchor
-    case 'Roster':
+    case 'Raid team':
+      return icon.faUsers
+    case 'Members':
       return icon.faUserFriends
     case 'Help':
       return icon.faQuestion

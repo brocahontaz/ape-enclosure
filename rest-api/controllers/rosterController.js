@@ -29,12 +29,23 @@ const refreshRoster = async token => {
     console.log(err)
   }
 }
-/*
-const refreshCharacter = async (token, characterId, classId, raceId) => {
-  getClass(token, classId)
-  console.log(await getRace(token, raceId))
+
+const refreshTeam = async token => {
+  try {
+    console.log('tok', token)
+    const test = await axios.get('https://eu.api.blizzard.com/data/wow/guild/tarren-mill/ape-enclosure/roster', {
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Battlenet-Namespace': 'profile-eu'
+      }
+    })
+    console.log('roster', test)
+    return test.data.members
+  } catch (err) {
+    console.log(err)
+  }
 }
-*/
 
 const getCharacter = async (token, characterName, realmSlug) => {
   try {
@@ -97,38 +108,7 @@ const getSoulbinds = async (token, characterName, realmSlug) => {
     console.log(err)
   }
 }
-/*
-const getClass = async (token, classId) => {
 
-  const cName = await getClassInfo(token, classId)
-  const cIcon = await getClassMedia(token, classId)
-
-  const pClass = {
-    name: cName,
-    icon: cIcon
-  }
-
-  return pClass
-  // console.log(await getClassInfo(token, classId))
-  // console.log(await getClassMedia(token, classId))
-}
-*//*
-const getClassInfo = async (token, classId) => {
-  try {
-    const info = await axios.get('https://eu.api.blizzard.com/data/wow/playable-class/' + classId, {
-      method: 'get',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Battlenet-Namespace': 'static-eu'
-      }
-    })
-
-    return info.data.name.en_US
-  } catch (err) {
-    console.log(err)
-  }
-}
-*/
 const getClassMedia = async (token, classId) => {
   try {
     const media = await axios.get('https://eu.api.blizzard.com/data/wow/media/playable-class/' + classId, {
@@ -169,22 +149,6 @@ const getActiveSoulbind = soulbinds => {
   return active
 }
 
-/*
-const getRace = async (token, raceId) => {
-  try {
-    const race = await axios.get('https://eu.api.blizzard.com/data/wow/playable-race/' + raceId, {
-      method: 'get',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Battlenet-Namespace': 'static-eu'
-      }
-    })
-    return race.data.name.en_US
-  } catch (err) {
-    console.log(err)
-  }
-}
-*/
 /**
  * Roster controller
  *
@@ -193,19 +157,88 @@ const getRace = async (token, raceId) => {
  * @param {object} next the Express forward object
  */
 rosterController.index = async (req, res, next) => {
+  const msg = {
+    status: 'OK!',
+    msg: 'Rest-API connection working!'
+  }
+  res.json(msg)
+}
+
+rosterController.full = async (req, res, next) => {
   try {
-    const roster = await CharacterProfile.find()
+    const roster = await CharacterProfile.getRoster()
     res.json(roster)
   } catch (err) {
     console.log(err)
   }
 }
 
-rosterController.refresh = async (req, res, next) => {
+rosterController.team = async (req, res, next) => {
+  try {
+    const roster = await CharacterProfile.getTeam()
+    res.json(roster)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+rosterController.fullRefresh = async (req, res, next) => {
   try {
     const token = res.locals.token.access_token
 
     const roster = await refreshRoster(token)
+
+    for (const character of roster) {
+      const charInfo = await getCharacter(token, character.character.name, character.character.realm.slug)
+
+      if (charInfo) {
+        const classIcon = await getClassMedia(token, character.character.playable_class.id)
+        const charMedia = await getCharacterMedia(token, character.character.name, character.character.realm.slug)
+        const specIcon = await getSpecMedia(token, charInfo.active_spec.id)
+        const covenantInfo = charInfo.covenant_progress ? await getCovenant(token, charInfo.covenant_progress.chosen_covenant.id) : ''
+
+        const soulbinds = charInfo.covenant_progress ? await getSoulbinds(token, character.character.name, character.character.realm.slug) : []
+        console.log(soulbinds)
+
+        const activeSoulbind = (charInfo.covenant_progress && soulbinds && soulbinds.length > 0) ? getActiveSoulbind(soulbinds) : ''
+
+        const profile = {
+          key: character.character.key.href,
+          title: charInfo.active_title ? charInfo.active_title.name.en_US : '',
+          titleDisplay: charInfo.active_title ? charInfo.active_title.display_string.en_US : '',
+          name: charInfo.name,
+          icon: charMedia,
+          id: charInfo.id,
+          realm: charInfo.realm.name.en_US,
+          level: charInfo.level,
+          itemLevel: charInfo.equipped_item_level,
+          className: charInfo.character_class.name.en_US,
+          classIcon: classIcon,
+          activeSpec: charInfo.active_spec.name.en_US,
+          activeSpecIcon: specIcon,
+          race: charInfo.race.name.en_US,
+          rank: character.rank,
+          covenant: covenantInfo,
+          soulbinds: soulbinds,
+          activeSoulbind: activeSoulbind,
+          renown: charInfo.covenant_progress ? charInfo.covenant_progress.renown_level : 0,
+          lastLogin: charInfo.last_login_timestamp
+        }
+        console.log(profile)
+        CharacterProfile.updateChar(charInfo.id, profile)
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  }
+  res.json('Roster refreshed!')
+}
+
+rosterController.teamRefresh = async (req, res, next) => {
+  try {
+    const token = res.locals.token.access_token
+
+    const roster = await refreshTeam(token)
 
     for (const character of roster) {
       const charInfo = await getCharacter(token, character.character.name, character.character.realm.slug)
@@ -247,10 +280,11 @@ rosterController.refresh = async (req, res, next) => {
         CharacterProfile.updateChar(charInfo.id, profile)
       }
     }
+    res.json('Roster refreshed!')
   } catch (err) {
     console.log(err)
+    res.json(err)
   }
-  res.json('Roster refreshed!')
 }
 
 module.exports = rosterController

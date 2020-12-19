@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as icon from '@fortawesome/free-solid-svg-icons'
 
-import './Roster.css'
+import './Team.css'
 import RosterService from 'services/RosterService'
 import useSortableData from 'hooks/useSortableData'
 import SortButton from 'MainContent/components/SortButton'
 
-const Roster = () => {
+const Team = () => {
   const [roster, setRoster] = useState([])
   const { items, requestSort, sortConfig } = useSortableData(roster)
 
@@ -25,7 +25,7 @@ const Roster = () => {
 
   const retrieveRoster = async () => {
     try {
-      const response = await RosterService.getRoster()
+      const response = await RosterService.getTeam()
       const rost = await response.data
       setRoster(rost)
       requestSort('rank')
@@ -40,12 +40,8 @@ const Roster = () => {
         return 'GM'
       case 1:
         return 'Officer'
-      case 2:
-        return 'Officer alt'
       case 3:
         return 'Raider'
-      case 4: 
-        return 'Alt'
       default:
         return 'Plebeian'
     }
@@ -53,10 +49,7 @@ const Roster = () => {
 
   return(
     <div className='Roster'>
-      <div className='HeaderBar'>
-        <h2> <FontAwesomeIcon icon={icon.faUserFriends}/> Full Roster</h2>
-        <button>Refresh</button>
-      </div>
+      <h2> <FontAwesomeIcon icon={icon.faUsers}/> Raid Team</h2>
       <table>
         <thead>
           <tr>
@@ -113,4 +106,4 @@ const Roster = () => {
 }
 
 
-export default Roster
+export default Team

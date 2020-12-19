@@ -6,6 +6,7 @@ import './MainContent.css'
 import Sidebar from './Sidebar'
 import Home from './Home'
 import Roster from './Roster'
+import Team from './Team'
 import ContentWrapper from './ContentWrapper'
 
 const MainContent = () => 
@@ -15,6 +16,7 @@ const MainContent = () =>
       <Switch>
         <Route exact path='/' component={Home} />
         <Route path='/roster' component={Roster} />
+        <Route path='/team' component={Team} />
       </Switch>
     </ContentWrapper>
   </main>
