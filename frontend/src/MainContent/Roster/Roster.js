@@ -10,8 +10,6 @@ import SortButton from './components/SortButton'
 
 const Roster = () => {
   const [roster, setRoster] = useState([])
-  const [test, setTest] = useState('')
-
   const { items, requestSort, sortConfig } = useSortableData(roster)
 
   const getClassNamesFor = name => {
@@ -29,16 +27,8 @@ const Roster = () => {
     try {
       const response = await RosterService.getAll()
       const rost = await response.data
-      console.log('rost!', rost)
-      const sorted = rost.sort((a, b) => { 
-        if (a.rank < b.rank) { return -1 }
-        if (a.rank > b.rank) { return 1 }
-       })
-      console.log('sort', sorted)
       setRoster(rost)
-      setTest('test')
-      console.log('set?', roster)
-      console.log('lala', test)
+      requestSort('rank')
     } catch (err) {
       setRoster(['err'])
     }
@@ -67,7 +57,7 @@ const Roster = () => {
               <SortButton name='Name' sort='name' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th className='RoRealm'>
-              Realm
+            <SortButton name='Realm' sort='realm' click={requestSort} classSwitch={getClassNamesFor} />
             </th>
             <th className='RoRole'>
               <SortButton name='Role' sort='role' click={requestSort} classSwitch={getClassNamesFor} />
@@ -76,18 +66,24 @@ const Roster = () => {
               <SortButton name='Rank' sort='rank' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
             <th className='RoLvl'>
-              <SortButton name='Level' sort='level' click={requestSort} classSwitch={getClassNamesFor}/>
+              <SortButton name='Lvl' sort='level' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
-            <th>
-              <SortButton name='Last login' sort='lastLogin' click={requestSort} classSwitch={getClassNamesFor}/>
+            <th className='RoIlvl'>
+              <SortButton name='ilvl' sort='itemLevel' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
-            <th className='RoUpdated'>
-              <SortButton name='Updated' sort='updatedAt' click={requestSort} classSwitch={getClassNamesFor}/>
+            <th className='RoCovenant'>
+              <SortButton name='Covenant' sort='covenant' click={requestSort} classSwitch={getClassNamesFor}/>
+            </th>
+            <th className='RoRenown'>
+              <SortButton name='Renown' sort='renown' click={requestSort} classSwitch={getClassNamesFor}/>
+            </th>
+            <th className='RoSoulbind'>
+              <SortButton name='Soulbind' sort='activeSoulbind' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
           </tr>
         </thead>
         <tbody>
-          {roster.filter(character => (character.rank === 0 || character.rank === 1 || character.rank === 3)).map(character => (
+          {items.filter(character => (character.rank === 0 || character.rank === 1 || character.rank === 3)).map(character => (
             <tr key={character.id}>
               <td>
                 <img src={character.activeSpecIcon} className='PlayerSpecIcon'/>
@@ -97,8 +93,10 @@ const Roster = () => {
               <td>{character.role}</td>
               <td>{getRank(character.rank)}</td>
               <td>{character.level}</td>
-              <td>{character.lastLogin}</td>
-              <td>{character.updatedAt}</td>
+              <td>{character.itemLevel}</td>
+              <td>{character.covenant}</td>
+              <td>{character.renown}</td>
+              <td>{character.activeSoulbind}</td>
             </tr>
           ))}
         </tbody>

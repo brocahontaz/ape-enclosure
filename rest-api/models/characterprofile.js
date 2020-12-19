@@ -92,9 +92,14 @@ const CharacterProfileSchema = new mongoose.Schema({
     unique: false
   },
   soulbinds: {
-    type: Array,
+    type: [],
     required: true,
     unique: false
+  },
+  activeSoulbind: {
+    type: String,
+    required: true,
+    unique: true
   },
   renown: {
     type: String,

@@ -7,7 +7,7 @@
 .Roster table {
   display: table;
   margin-top: 20px;
-  width: 1000px;
+  width: 1100px;
   align-self: stretch;
   background: #414141;
   border-collapse: collapse;
@@ -17,6 +17,7 @@
 .Roster table thead tr {
   text-align: left;
   height: 50px;
+  font-size: 1.0rem;
 }
 
 .Roster table thead tr td {
@@ -65,15 +66,27 @@
 }
 
 .RoRank {
-  width: 50px;
+  width: 80px;
 }
 
 .RoLvl {
-  width: 50px;
+  width: 80px;
 }
 
-.RoUpdated {
-  width: auto;
+.RoIlvl {
+  width: 80px;
+}
+
+.RoCovenant {
+  width: 110px;
+}
+
+.RoRenown {
+  width: 100px;
+}
+
+.RoSoulbind {
+  width: 110px;
 }
 
 .PlayerSpecIcon {

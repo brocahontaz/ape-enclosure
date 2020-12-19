@@ -82,6 +82,21 @@ const getCovenant = async (token, covenantId) => {
     console.log(err)
   }
 }
+
+const getSoulbinds = async (token, characterName, realmSlug) => {
+  try {
+    const info = await axios.get(`https://eu.api.blizzard.com/profile/wow/character/${realmSlug}/${characterName.toLowerCase()}/soulbinds`, {
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Battlenet-Namespace': 'profile-eu'
+      }
+    })
+    return info.data.soulbinds
+  } catch (err) {
+    console.log(err)
+  }
+}
 /*
 const getClass = async (token, classId) => {
 
@@ -144,6 +159,16 @@ const getSpecMedia = async (token, specId) => {
   }
 }
 
+const getActiveSoulbind = soulbinds => {
+  let active = ''
+  soulbinds.forEach(soulbind => {
+    if (soulbind.is_active) {
+      active = soulbind.soulbind.name.en_US
+    }
+  })
+  return active
+}
+
 /*
 const getRace = async (token, raceId) => {
   try {
@@ -177,7 +202,6 @@ rosterController.index = async (req, res, next) => {
 }
 
 rosterController.refresh = async (req, res, next) => {
-
   try {
     const token = res.locals.token.access_token
 
@@ -191,6 +215,11 @@ rosterController.refresh = async (req, res, next) => {
         const charMedia = await getCharacterMedia(token, character.character.name, character.character.realm.slug)
         const specIcon = await getSpecMedia(token, charInfo.active_spec.id)
         const covenantInfo = charInfo.covenant_progress ? await getCovenant(token, charInfo.covenant_progress.chosen_covenant.id) : 'none'
+
+        const soulbinds = charInfo.covenant_progress ? await getSoulbinds(token, character.character.name, character.character.realm.slug) : []
+        console.log(soulbinds)
+
+        const activeSoulbind = (charInfo.covenant_progress && soulbinds && soulbinds.length > 0) ? getActiveSoulbind(soulbinds) : 'none'
 
         const profile = {
           key: character.character.key.href,
@@ -209,7 +238,8 @@ rosterController.refresh = async (req, res, next) => {
           race: charInfo.race.name.en_US,
           rank: character.rank,
           covenant: covenantInfo,
-          soulbinds: [],
+          soulbinds: soulbinds,
+          activeSoulbind: activeSoulbind,
           renown: charInfo.covenant_progress ? charInfo.covenant_progress.renown_level : 0,
           lastLogin: charInfo.last_login_timestamp
         }
