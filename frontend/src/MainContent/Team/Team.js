@@ -71,6 +71,9 @@ const Team = () => {
             <th className='RoIlvl'>
               <SortButton name='ilvl' sort='itemLevel' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
+            <th className='RoKey'>
+              <SortButton name='Key' sort='weeklyKey' click={requestSort} classSwitch={getClassNamesFor}/>
+            </th>
             <th className='RoCovenant'>
               <SortButton name='Covenant' sort='covenant' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
@@ -94,6 +97,7 @@ const Team = () => {
               <td>{getRank(character.rank)}</td>
               <td>{character.level}</td>
               <td>{character.itemLevel}</td>
+              <td>{character.weeklyKey}</td>
               <td>{character.covenant}</td>
               <td>{character.renown}</td>
               <td>{character.activeSoulbind}</td>

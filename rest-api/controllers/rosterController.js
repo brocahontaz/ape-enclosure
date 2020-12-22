@@ -261,7 +261,8 @@ rosterController.fullRefresh = async (req, res, next) => {
           activeSoulbind: activeSoulbind,
           renown: charInfo.covenant_progress ? charInfo.covenant_progress.renown_level : 0,
           lastLogin: charInfo.last_login_timestamp,
-          keystoneInfo: keystoneInfo
+          keystoneInfo: keystoneInfo,
+          weeklyKey: keystoneInfo ? keystoneInfo.weeklyHighestRunLevel : 0
         }
         console.log(profile)
         CharacterProfile.updateChar(charInfo.id, profile)

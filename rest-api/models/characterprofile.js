@@ -156,7 +156,12 @@ const CharacterProfileSchema = new mongoose.Schema({
     required: true,
     unique: false
   },
-  keystoneInfo: KeystoneSchema
+  keystoneInfo: KeystoneSchema,
+  weeklyKey: {
+    type: Number,
+    required: true,
+    unique: false
+  }
 }, {
   timestamps: true
 })
