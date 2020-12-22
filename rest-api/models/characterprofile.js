@@ -47,7 +47,12 @@ const KeystoneSchema = new mongoose.Schema({
   recentRuns: [DungeonSchema],
   bestRuns: [DungeonSchema],
   highestRuns: [DungeonSchema],
-  weeklyHighestRuns: [DungeonSchema]
+  weeklyHighestRuns: [DungeonSchema],
+  weeklyHighestRunLevel: {
+    type: Number,
+    required: true,
+    unique: false
+  }
 })
 
 const CharacterProfileSchema = new mongoose.Schema({

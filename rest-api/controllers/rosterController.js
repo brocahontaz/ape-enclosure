@@ -151,17 +151,20 @@ const getActiveSoulbind = soulbinds => {
 
 const getKeystoneInfo = async (characterName, realmSlug) => {
   try {
-    const keystoneData = await axios.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realmSlug}&name=${characterName}&fields=mythic_plus_best_runs%2Cmythic_plus_ranks%2Cmythic_plus_recent_runs%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent`)
+    const keystoneData = await axios.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realmSlug}&name=${characterName.toLowerCase()}&fields=mythic_plus_best_runs%2Cmythic_plus_ranks%2Cmythic_plus_recent_runs%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent`)
+    console.log(keystoneData.data)
     const keystoneInfo = {
-      score: keystoneData.mythic_plus_scores_by_season.scores.all,
-      recentRuns: getRunInfo(keystoneData.mythic_plus_recent_runs),
-      bestRuns: getRunInfo(keystoneData.mythic_plus_best_runs),
-      highestRuns: getRunInfo(keystoneData.mythic_plus_highest_level_runs),
-      weeklyHighestRuns: getRunInfo(keystoneData.mythic_plus_weekly_highest_level_runs)
+      score: keystoneData.data.mythic_plus_scores_by_season[0].scores.all,
+      recentRuns: getRunInfo(keystoneData.data.mythic_plus_recent_runs),
+      bestRuns: getRunInfo(keystoneData.data.mythic_plus_best_runs),
+      highestRuns: getRunInfo(keystoneData.data.mythic_plus_highest_level_runs),
+      weeklyHighestRuns: getRunInfo(keystoneData.data.mythic_plus_weekly_highest_level_runs),
+      weeklyHighestRunLevel: keystoneData.data.mythic_plus_weekly_highest_level_runs[0].mythic_level
     }
     return keystoneInfo
   } catch (err) {
     console.log(err)
+    return undefined
   }
 }
 
@@ -233,7 +236,7 @@ rosterController.fullRefresh = async (req, res, next) => {
 
         const activeSoulbind = (charInfo.covenant_progress && soulbinds && soulbinds.length > 0) ? getActiveSoulbind(soulbinds) : ''
 
-        const keystoneInfo = getKeystoneInfo(character.character.name, character.character.realm.slug)
+        const keystoneInfo = await getKeystoneInfo(character.character.name, character.character.realm.slug)
 
         console.log(keystoneInfo)
 
@@ -257,7 +260,8 @@ rosterController.fullRefresh = async (req, res, next) => {
           soulbinds: soulbinds,
           activeSoulbind: activeSoulbind,
           renown: charInfo.covenant_progress ? charInfo.covenant_progress.renown_level : 0,
-          lastLogin: charInfo.last_login_timestamp
+          lastLogin: charInfo.last_login_timestamp,
+          keystoneInfo: keystoneInfo
         }
         console.log(profile)
         CharacterProfile.updateChar(charInfo.id, profile)
