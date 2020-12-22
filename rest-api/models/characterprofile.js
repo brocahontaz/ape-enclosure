@@ -10,6 +10,46 @@
 
 const mongoose = require('mongoose')
 
+const DungeonSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  short_name: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  level: {
+    type: Number,
+    required: true,
+    unique: false
+  },
+  upgrade: {
+    type: Number,
+    required: true,
+    unique: false
+  },
+  score: {
+    type: Number,
+    required: true,
+    unique: false
+  }
+})
+
+const KeystoneSchema = new mongoose.Schema({
+  score: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  recentRuns: [DungeonSchema],
+  bestRuns: [DungeonSchema],
+  highestRuns: [DungeonSchema],
+  weeklyHighestRuns: [DungeonSchema]
+})
+
 const CharacterProfileSchema = new mongoose.Schema({
   key: {
     type: String,
@@ -110,7 +150,8 @@ const CharacterProfileSchema = new mongoose.Schema({
     type: Number,
     required: true,
     unique: false
-  }
+  },
+  keystoneInfo: KeystoneSchema
 }, {
   timestamps: true
 })

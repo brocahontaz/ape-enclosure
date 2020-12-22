@@ -149,6 +149,37 @@ const getActiveSoulbind = soulbinds => {
   return active
 }
 
+const getKeystoneInfo = async (characterName, realmSlug) => {
+  try {
+    const keystoneData = await axios.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realmSlug}&name=${characterName}&fields=mythic_plus_best_runs%2Cmythic_plus_ranks%2Cmythic_plus_recent_runs%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent`)
+    const keystoneInfo = {
+      score: keystoneData.mythic_plus_scores_by_season.scores.all,
+      recentRuns: getRunInfo(keystoneData.mythic_plus_recent_runs),
+      bestRuns: getRunInfo(keystoneData.mythic_plus_best_runs),
+      highestRuns: getRunInfo(keystoneData.mythic_plus_highest_level_runs),
+      weeklyHighestRuns: getRunInfo(keystoneData.mythic_plus_weekly_highest_level_runs)
+    }
+    return keystoneInfo
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+const getRunInfo = (runs) => {
+  const result = []
+  runs.forEach(dungeon => {
+    const info = {
+      name: dungeon.dungeon,
+      short_name: dungeon.short_name,
+      level: dungeon.mythic_level,
+      upgrade: dungeon.num_keystone_upgrades,
+      score: dungeon.score
+    }
+    result.push(info)
+  })
+  return result
+}
+
 /**
  * Roster controller
  *
@@ -201,6 +232,10 @@ rosterController.fullRefresh = async (req, res, next) => {
         console.log(soulbinds)
 
         const activeSoulbind = (charInfo.covenant_progress && soulbinds && soulbinds.length > 0) ? getActiveSoulbind(soulbinds) : ''
+
+        const keystoneInfo = getKeystoneInfo(character.character.name, character.character.realm.slug)
+
+        console.log(keystoneInfo)
 
         const profile = {
           key: character.character.key.href,

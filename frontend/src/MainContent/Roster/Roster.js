@@ -55,7 +55,7 @@ const Roster = () => {
     <div className='Roster'>
       <div className='HeaderBar'>
         <h2> <FontAwesomeIcon icon={icon.faUserFriends}/> Full Roster</h2>
-        <button>Refresh</button>
+        <button onClick={() => RosterService.getRoster()}>Refresh</button>
       </div>
       <table>
         <thead>
