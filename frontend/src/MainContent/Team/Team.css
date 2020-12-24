@@ -49,12 +49,16 @@
 .Team td span {
   text-align: left; 
   vertical-align: middle;
-  margin-left: 10px;
+  margin-left: 0px;
+}
+
+.RoClass {
+  width: 70px;
+  padding-left: 10px;
 }
 
 .RoName {
-  width: 130px;
-  padding-left: 10px;
+  width: 135px;
 }
 
 .RoRealm {
@@ -62,27 +66,27 @@
 }
 
 .RoRole {
-  width: 100px;
+  width: 90px;
 }
 
 .RoRank {
-  width: 80px;
+  width: 85px;
 }
 
 .RoLvl {
-  width: 80px;
+  width: 60px;
 }
 
 .RoIlvl {
-  width: 80px;
+  width: 60px;
 }
 
 .RoKey {
-  width: 80px;
+  width: 60px;
 }
 
 .RoCovenant {
-  width: 110px;
+  width: 115px;
 }
 
 .RoRenown {
@@ -90,7 +94,8 @@
 }
 
 .RoSoulbind {
-  width: 110px;
+  width: auto;
+  padding-right: 10px;
 }
 
 .PlayerSpecIcon {
@@ -100,4 +105,44 @@
   border: 1px solid white;
   margin-left: 10px;
   vertical-align: middle;
+}
+
+.ClassSpecInfo {
+  display: none;
+  position: absolute;
+  margin-left: 10px;
+  padding: 5px;
+  background: rgba(224, 224, 224, 1.0);
+  color: black;
+}
+
+.IconHolder {
+  height: 100%;
+}
+
+.IconHolder:hover + .ClassSpecInfo {
+  display: block;
+}
+
+.KeyHolder {
+
+}
+
+.KeyInfo {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  margin-left: 0px;
+  padding: 5px;
+  background: rgba(224, 224, 224, 1.0);
+  color: black;
+}
+
+.KeyInfo span {
+  padding: 0;
+  margin: 0;
+}
+
+.KeyHolder:hover + .KeyInfo {
+  display: flex;
 }

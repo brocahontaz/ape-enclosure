@@ -48,11 +48,14 @@ const Team = () => {
   }
 
   return(
-    <div className='Roster'>
+    <div className='Team'>
       <h2> <FontAwesomeIcon icon={icon.faUsers}/> Raid Team</h2>
       <table>
         <thead>
           <tr>
+          <th className='RoClass'>
+              <SortButton name='Class' sort='className' click={requestSort} classSwitch={getClassNamesFor}/>
+            </th>
             <th className='RoName'>
               <SortButton name='Name' sort='name' click={requestSort} classSwitch={getClassNamesFor}/>
             </th>
@@ -89,7 +92,15 @@ const Team = () => {
           {items.map(character => (
             <tr key={character.id}>
               <td>
-                <img src={character.activeSpecIcon} className='PlayerSpecIcon'/>
+                <div className='IconHolder'>
+                  <img src={character.classIcon} className='PlayerSpecIcon'/>
+                  <img src={character.activeSpecIcon} className='PlayerSpecIcon'/>
+                </div>
+                <div className='ClassSpecInfo'>
+                  {character.activeSpec + ' ' + character.className}
+                </div>
+              </td>
+              <td>
                 <span>{character.name}</span>
               </td>
               <td>{character.realm}</td>
@@ -97,7 +108,16 @@ const Team = () => {
               <td>{getRank(character.rank)}</td>
               <td>{character.level}</td>
               <td>{character.itemLevel}</td>
-              <td>{character.weeklyKey}</td>
+              <td>
+                <div className='KeyHolder'>
+                  {character.weeklyKey}
+                </div>
+                <div className='KeyInfo'>
+                  <span>{character.keystoneInfo.weeklyHighestRuns[0].name}</span>
+                  <span>{'Upgrade: +' + character.keystoneInfo.weeklyHighestRuns[0].upgrade}</span>
+                  <span>{'Score: ' + character.keystoneInfo.weeklyHighestRuns[0].score}</span>
+                </div>
+              </td>
               <td>{character.covenant}</td>
               <td>{character.renown}</td>
               <td>{character.activeSoulbind}</td>
