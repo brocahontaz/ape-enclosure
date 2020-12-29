@@ -7,6 +7,7 @@ import Sidebar from './Sidebar'
 import Home from './Home'
 import Roster from './Roster'
 import Team from './Team'
+import Characters from './Characters'
 import ContentWrapper from './ContentWrapper'
 
 const MainContent = () => 
@@ -17,6 +18,7 @@ const MainContent = () =>
         <Route exact path='/' component={Home} />
         <Route path='/roster' component={Roster} />
         <Route path='/team' component={Team} />
+        <Route path='/characters' component={Characters} />
       </Switch>
     </ContentWrapper>
   </main>

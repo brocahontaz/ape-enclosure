@@ -190,6 +190,14 @@ CharacterProfileSchema.statics.getTeam = async function () {
   }
 }
 
+CharacterProfileSchema.statics.getByName = async function (name) {
+  try {
+    return await this.find({ name: { $regex: name, $options: 'i' } })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const CharacterProfile = mongoose.model('CharacterProfile', CharacterProfileSchema)
 
 module.exports = CharacterProfile

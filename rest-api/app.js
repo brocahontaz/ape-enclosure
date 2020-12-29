@@ -75,6 +75,7 @@ app.use(async (req, res, next) => {
 // Set up routes
 app.use('/', require('./routes/homeRouter'))
 app.use('/roster', require('./routes/rosterRouter'))
+app.use('/character', require('./routes/characterRouter'))
 
 // Set up socket middleware
 app.use((event, req, res, next) => {
