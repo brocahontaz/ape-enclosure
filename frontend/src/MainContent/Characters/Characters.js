@@ -65,6 +65,56 @@ const Character = () => {
     }
   }
 
+  const getVaultItems = () => {
+    const weeklyRuns = character.keystoneInfo.weeklyHighestRuns
+    const first = weeklyRuns[0] ? getVaultItemLvl(weeklyRuns[0].level) : 0 
+    const second = weeklyRuns[3] ? getVaultItemLvl(weeklyRuns[3].level) : 0
+    const third = weeklyRuns[9] ? getVaultItemLvl(weeklyRuns[9].level) : 0
+    
+    return {
+      first,
+      second,
+      third
+    }
+  }
+
+  const getVaultItemLvl = keyLevel => {
+    switch(keyLevel) {
+      case 2:
+        return 200
+      case 3:
+        return 203
+      case 4:
+        return 207
+      case 5:
+        return 210
+      case 6:
+        return 210
+      case 7:
+        return 213
+      case 8:
+        return 216
+      case 9:
+        return 216
+      case 10:
+        return 220
+      case 11:
+        return 220
+      case 12:
+        return 223
+      case 13:
+        return 223
+      case 14:
+        return 226
+      case 15:
+        return 226
+      default:
+        return 0
+    }
+  }
+
+  // const vaultItems = getVaultItems()
+
   return(
     <div className='Character'>
       <h2><FontAwesomeIcon icon={icon.faUser}/> {getTitleAndName()}</h2>
@@ -82,31 +132,94 @@ const Character = () => {
       <div className='CharacterKeystones'>
         <div className='CharacterWeeklyHighestRuns'>
           <h4>Weekly Highest</h4>
-          <ul>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Score</th>
+                <th>Upgrade</th>
+              </tr>
+            </thead>
+            <tbody>
             {character.keystoneInfo && character.keystoneInfo.weeklyHighestRuns.map(keystone => (
-              <li>{keystone.name}</li>
+              <tr>
+                <th>
+                  {keystone.short_name} {keystone.level}
+                </th>
+                <th>
+                {keystone.score}
+                </th>
+                <th>
+                   {keystone.upgrade}
+                </th>
+              </tr>
             ))}
+            </tbody>
+          </table>
+          <ul>
+            
           </ul>
         </div>
         <div className='CharacterHighestRuns'>
           <h4>Overall Highest</h4>
-          <ul>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Score</th>
+                <th>Upgrade</th>
+              </tr>
+            </thead>
+            <tbody>
             {character.keystoneInfo && character.keystoneInfo.highestRuns.map(keystone => (
-              <li>{keystone.name}</li>
+              <tr>
+                <th>
+                  {keystone.short_name} {keystone.level}
+                </th>
+                <th>
+                {keystone.score}
+                </th>
+                <th>
+                   {keystone.upgrade}
+                </th>
+              </tr>
             ))}
-          </ul>
+            </tbody>
+          </table>
         </div>
         <div className='CharacterRecentRuns'>
           <h4>Recent Runs</h4>
-          <ul>
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Score</th>
+                <th>Upgrade</th>
+              </tr>
+            </thead>
+            <tbody>
             {character.keystoneInfo && character.keystoneInfo.recentRuns.map(keystone => (
-              <li>{keystone.name}</li>
+              <tr>
+                <th>
+                  {keystone.short_name} {keystone.level}
+                </th>
+                <th>
+                {keystone.score}
+                </th>
+                <th>
+                   {keystone.upgrade}
+                </th>
+              </tr>
             ))}
-          </ul>
+            </tbody>
+          </table>
         </div>
       </div>
+      <h3>Vault</h3>
       <div className='CharacterVault'>
-          <h4>Vault</h4>
+          {character.keystoneInfo && getVaultItems().first}
+          {character.keystoneInfo && getVaultItems().second}
+          {character.keystoneInfo && getVaultItems().third}
       </div>
     </div>
   )

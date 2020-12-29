@@ -56,8 +56,12 @@
   padding: 0;
   padding-left: 0px;
   margin-bottom: 10px;
+  padding: 10px;
 }
 
-.CharacterWeeklyHighestRuns {
+.CharacterWeeklyHighestRuns, .CharacterHighestRuns, .CharacterRecentRuns {
   background: #353535;
+  width: 300px;
+  margin-right: 20px;
+  padding: 20px;
 }
