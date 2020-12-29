@@ -14,6 +14,18 @@
   --link-active-background: #3c3c3d;
   --link-text: #b4b4b4;
   --link-active-text: #ffffff;
+  --death-knight: #C41F3B;
+  --demon-hunter: #A330C9;
+  --druid: #FF7D0A;
+  --hunter: #AAD372;
+  --mage: #3FC7EB;
+  --monk: #00FF98;
+  --paladin: #F48CBA;
+  --priest: #FFFFFF;
+  --rogue: #FFF468;
+  --shaman: #0070DD;
+  --warlock: #8788EE;
+  --warrior: #C69B6D;
 }
 
 .App {
@@ -24,8 +36,67 @@
   flex-direction: column;
 }
 
-h2 {
+h2.h3,h4 {
   padding: 0;
   margin: 0;
 }
-  
+
+.Death-knight {
+  color: var(--death-knight);
+  border-color: var(--death-knight);
+}
+
+.Demon-hunter {
+  color: var(--demon-hunter);
+  border-color: var(--demon-hunter);
+}
+
+.Druid {
+  color: var(--druid);
+  border-color: var(--druid);
+}
+
+.Hunter {
+  color: var(--hunter);
+  border-color: var(--hunter);
+}
+
+.Mage {
+  color: var(--mage);
+  border-color: var(--mage);
+}
+
+.Monk {
+  color: var(--monk);
+  border-color: var(--monk);
+}
+
+.Paladin {
+  color: var(--paladin);
+  border-color: var(--paladin);
+}
+
+.Priest {
+  color: var(--priest);
+  border-color: var(--priest);
+}
+
+.Rogue {
+  color: var(--rogue);
+  border-color: var(--rogue);
+}
+
+.Shaman {
+  color: var(--shaman);
+  border-color: var(--shaman);
+}
+
+.Warlock {
+  color: var(--warlock);
+  border-color: var(--warlock);
+}
+
+.Warrior {
+  color: var(--warrior);
+  border-color: var(--warrior);
+}

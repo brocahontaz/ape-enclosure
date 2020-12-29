@@ -52,10 +52,62 @@ const Character = () => {
     return name
   }
 
+  const getRank = rankId => {
+    switch(rankId) {
+      case 0:
+        return 'GM'
+      case 1:
+        return 'Officer'
+      case 3:
+        return 'Raider'
+      default:
+        return 'Plebeian'
+    }
+  }
+
   return(
     <div className='Character'>
       <h2><FontAwesomeIcon icon={icon.faUser}/> {getTitleAndName()}</h2>
-      <span className='CharacterRace'>{character.race} </span> <span className='CharacterClass'>{character.activeSpec + ' ' + character.className}</span>
+      <div className='CharacterName'>
+        <span className='CharacterRace'>{character.race} </span> <span className={'CharacterClass ' + character.className}>{character.activeSpec + ' ' + character.className}</span> | {getRank(character.rank)}
+      </div>
+      <div className='CharacterInfo'>
+        <img src={character.icon} className={'CharacterIcon ' + character.className}/>
+        <div className='CharacterUpdated'>
+          <span><FontAwesomeIcon icon={icon.faSync}/> Last updated: {character.updatedAt}</span>
+          <span><FontAwesomeIcon icon={icon.faSignInAlt}/> Last logged in: {character.lastLogin}</span>
+        </div>
+      </div>
+      <h3>Keystones</h3>
+      <div className='CharacterKeystones'>
+        <div className='CharacterWeeklyHighestRuns'>
+          <h4>Weekly Highest</h4>
+          <ul>
+            {character.keystoneInfo && character.keystoneInfo.weeklyHighestRuns.map(keystone => (
+              <li>{keystone.name}</li>
+            ))}
+          </ul>
+        </div>
+        <div className='CharacterHighestRuns'>
+          <h4>Overall Highest</h4>
+          <ul>
+            {character.keystoneInfo && character.keystoneInfo.highestRuns.map(keystone => (
+              <li>{keystone.name}</li>
+            ))}
+          </ul>
+        </div>
+        <div className='CharacterRecentRuns'>
+          <h4>Recent Runs</h4>
+          <ul>
+            {character.keystoneInfo && character.keystoneInfo.recentRuns.map(keystone => (
+              <li>{keystone.name}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className='CharacterVault'>
+          <h4>Vault</h4>
+      </div>
     </div>
   )
 }

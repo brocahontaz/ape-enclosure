@@ -146,3 +146,7 @@
 .KeyHolder:hover + .KeyInfo {
   display: flex;
 }
+
+.CharacterLink {
+  color: white;
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as icon from '@fortawesome/free-solid-svg-icons'
 
@@ -101,7 +102,7 @@ const Team = () => {
                 </div>
               </td>
               <td>
-                <span>{character.name}</span>
+                <NavLink to={'characters/' + character.name} className='CharacterLink'><span>{character.name}</span></NavLink>
               </td>
               <td>{character.realm}</td>
               <td>{character.role}</td>
@@ -112,11 +113,13 @@ const Team = () => {
                 <div className='KeyHolder'>
                   {character.weeklyKey}
                 </div>
+                {character.keystoneInfo &&
                 <div className='KeyInfo'>
-                  <span>{character.keystoneInfo.weeklyHighestRuns[0].name}</span>
+                  <span>{character.keystoneInfo && character.keystoneInfo.weeklyHighestRuns[0].name}</span>
                   <span>{'Upgrade: +' + character.keystoneInfo.weeklyHighestRuns[0].upgrade}</span>
                   <span>{'Score: ' + character.keystoneInfo.weeklyHighestRuns[0].score}</span>
                 </div>
+                }
               </td>
               <td>{character.covenant}</td>
               <td>{character.renown}</td>
