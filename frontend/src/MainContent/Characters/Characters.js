@@ -70,7 +70,7 @@ const Character = () => {
     const first = weeklyRuns[0] ? getVaultItemLvl(weeklyRuns[0].level) : 0 
     const second = weeklyRuns[3] ? getVaultItemLvl(weeklyRuns[3].level) : 0
     const third = weeklyRuns[9] ? getVaultItemLvl(weeklyRuns[9].level) : 0
-    
+
     return {
       first,
       second,
@@ -136,6 +136,7 @@ const Character = () => {
             <thead>
               <tr>
                 <th>Key</th>
+                <th>Level</th>
                 <th>Score</th>
                 <th>Upgrade</th>
               </tr>
@@ -144,13 +145,16 @@ const Character = () => {
             {character.keystoneInfo && character.keystoneInfo.weeklyHighestRuns.map(keystone => (
               <tr>
                 <th>
-                  {keystone.short_name} {keystone.level}
+                  {keystone.short_name}
+                </th>
+                <th>
+                  {keystone.level}
                 </th>
                 <th>
                 {keystone.score}
                 </th>
                 <th>
-                   {keystone.upgrade}
+                  + {keystone.upgrade}
                 </th>
               </tr>
             ))}
@@ -166,6 +170,7 @@ const Character = () => {
             <thead>
               <tr>
                 <th>Key</th>
+                <th>Level</th>
                 <th>Score</th>
                 <th>Upgrade</th>
               </tr>
@@ -174,13 +179,16 @@ const Character = () => {
             {character.keystoneInfo && character.keystoneInfo.highestRuns.map(keystone => (
               <tr>
                 <th>
-                  {keystone.short_name} {keystone.level}
+                  {keystone.short_name}
+                </th>
+                <th>
+                  {keystone.level}
                 </th>
                 <th>
                 {keystone.score}
                 </th>
                 <th>
-                   {keystone.upgrade}
+                  + {keystone.upgrade}
                 </th>
               </tr>
             ))}
@@ -193,6 +201,9 @@ const Character = () => {
             <thead>
               <tr>
                 <th>Key</th>
+                <th>
+                  Level
+                </th>
                 <th>Score</th>
                 <th>Upgrade</th>
               </tr>
@@ -201,13 +212,16 @@ const Character = () => {
             {character.keystoneInfo && character.keystoneInfo.recentRuns.map(keystone => (
               <tr>
                 <th>
-                  {keystone.short_name} {keystone.level}
+                  {keystone.short_name}
+                </th>
+                <th>
+                  {keystone.level}
                 </th>
                 <th>
                 {keystone.score}
                 </th>
                 <th>
-                   {keystone.upgrade}
+                  + {keystone.upgrade}
                 </th>
               </tr>
             ))}
@@ -217,9 +231,15 @@ const Character = () => {
       </div>
       <h3>Vault</h3>
       <div className='CharacterVault'>
+        <div className='VaultItem'>
           {character.keystoneInfo && getVaultItems().first}
+        </div>
+        <div className='VaultItem'>
           {character.keystoneInfo && getVaultItems().second}
+        </div>
+        <div className='VaultItem'>
           {character.keystoneInfo && getVaultItems().third}
+        </div>
       </div>
     </div>
   )
