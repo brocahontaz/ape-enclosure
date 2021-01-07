@@ -10,6 +10,7 @@
 require('dotenv').config()
 
 const http = require('http')
+var cors = require('cors')
 const express = require('express')
 const socket = require('socket.io')
 const logger = require('morgan')
@@ -17,6 +18,7 @@ const mongoose = require('./configs/mongoose')
 
 // Set up server with http, express and socket.io
 const app = express()
+app.use(cors())
 const server = http.createServer(app)
 const io = socket.listen(server)
 
