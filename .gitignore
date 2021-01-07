@@ -4,9 +4,9 @@
 
 ### dotenv ###
 .env
-rest-api/.env
-frontend/.env
-frontend/src/.env
+rest-api/*.env
+frontend/*.env
+frontend/src/*.env
 
 ### Linux ###
 *~
