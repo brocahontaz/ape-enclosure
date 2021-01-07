@@ -23,7 +23,9 @@ const refreshTeam = () => {
 const RosterService = {
   getAll,
   getRoster,
-  getTeam
+  refreshRoster,
+  getTeam,
+  refreshTeam
 }
 
 export default RosterService

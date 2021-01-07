@@ -1,4 +1,7 @@
 export const TOGGLE_MENU = 'TOGGLE_MENU'
+export const FETCH_ROSTER = 'FETCH_ROSTER'
+export const FETCH_TEAM = 'FETCH_TEAM'
 export const REFRESH_ROSTER = 'REFRESH_ROSTER'
 export const REFRESH_TEAM = 'REFRESH_TEAM'
 export const REFRESH_CHARACTER = 'REFRESH_CHARACTER'
+export const FETCH_ERROR = 'FETCH_ERROR'

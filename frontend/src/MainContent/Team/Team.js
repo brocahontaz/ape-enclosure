@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as icon from '@fortawesome/free-solid-svg-icons'
+import { connect } from 'react-redux'
+import { fetchTeam, refreshRoster } from 'redux/actions/actions'
+import RefreshButton from 'MainContent/components/RefreshButton'
 
 import './Team.css'
-import RosterService from 'services/RosterService'
 import useSortableData from 'hooks/useSortableData'
 import SortButton from 'MainContent/components/SortButton'
 
-const Team = () => {
+const Team = ({fetchTeam, refreshRoster, characters}) => {
   const [roster, setRoster] = useState([])
-  const { items, requestSort, sortConfig } = useSortableData(roster)
+  const { items, requestSort, sortConfig } = useSortableData(characters)
 
   const getClassNamesFor = name => {
     if (!sortConfig) {
@@ -20,6 +22,10 @@ const Team = () => {
     return sortConfig.key === name ? sortConfig.direction: undefined
   }
 
+  useEffect(() => {
+    fetchTeam()
+  }, [])
+/*
   useEffect(() => {
     retrieveRoster()
   }, [])
@@ -33,7 +39,7 @@ const Team = () => {
     } catch (err) {
       setRoster(['err'])
     }
-  }
+  }*/
 
   const getRank = rankId => {
     switch(rankId) {
@@ -50,7 +56,10 @@ const Team = () => {
 
   return(
     <div className='Team'>
-      <h2> <FontAwesomeIcon icon={icon.faUsers}/> Raid Team</h2>
+      <div className='HeaderBar'>
+        <h2> <FontAwesomeIcon icon={icon.faUsers}/> Raid Team</h2>
+        <RefreshButton action={refreshRoster} />
+      </div>
       <table>
         <thead>
           <tr>
@@ -132,5 +141,15 @@ const Team = () => {
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    characters: state.roster.characters,
+  }
+}
 
-export default Team
+const mapDispatchToProps = { fetchTeam, refreshRoster }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Team)
