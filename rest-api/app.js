@@ -20,7 +20,7 @@ const mongoose = require('./configs/mongoose')
 const app = express()
 app.use(cors())
 const server = http.createServer(app)
-const io = socket.listen(server)
+const io = socket.listen(server)cors
 
 const credentials = {
   client: {

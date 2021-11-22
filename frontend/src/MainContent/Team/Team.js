@@ -124,9 +124,9 @@ const Team = ({fetchTeam, refreshRoster, characters}) => {
                 </div>
                 {character.keystoneInfo &&
                 <div className='KeyInfo'>
-                  <span>{character.keystoneInfo && character.keystoneInfo.weeklyHighestRuns[0].name}</span>
-                  <span>{'Upgrade: +' + character.keystoneInfo.weeklyHighestRuns[0].upgrade}</span>
-                  <span>{'Score: ' + character.keystoneInfo.weeklyHighestRuns[0].score}</span>
+                  <span>{character.keystoneInfo.weeklyHighestRuns[0] && character.keystoneInfo.weeklyHighestRuns[0].name}</span>
+                  <span>Upgrade: {character.keystoneInfo.weeklyHighestRuns[0] && character.keystoneInfo.weeklyHighestRuns[0].upgrade}</span>
+                  <span>Score: {character.keystoneInfo.weeklyHighestRuns[0] && character.keystoneInfo.weeklyHighestRuns[0].score}</span>
                 </div>
                 }
               </td>

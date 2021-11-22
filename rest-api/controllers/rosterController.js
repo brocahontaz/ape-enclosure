@@ -152,7 +152,7 @@ const getActiveSoulbind = soulbinds => {
 const getKeystoneInfo = async (characterName, realmSlug) => {
   try {
     const keystoneData = await axios.get(`https://raider.io/api/v1/characters/profile?region=eu&realm=${realmSlug}&name=${characterName.toLowerCase()}&fields=mythic_plus_best_runs%2Cmythic_plus_ranks%2Cmythic_plus_recent_runs%2Cmythic_plus_highest_level_runs%2Cmythic_plus_weekly_highest_level_runs%2Cmythic_plus_scores_by_season%3Acurrent`)
-    console.log(keystoneData.data)
+    console.log(keystoneData.data)localhost 8080
     const keystoneInfo = {
       score: keystoneData.data.mythic_plus_scores_by_season[0].scores.all,
       recentRuns: getRunInfo(keystoneData.data.mythic_plus_recent_runs),
