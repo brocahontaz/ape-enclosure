@@ -3,11 +3,11 @@ const _ = new router({
   prefix: '/'
 })
 
-_.get('/', (ctx) => home(ctx))
+_.get('/', (ctx) => character(ctx))
 
-async function home(ctx){
+async function character(ctx){
   console.log('yaya')
-  ctx.body = 'hej'
+  ctx.body = 'chalalala'
 }
 
 module.exports = _.routes()

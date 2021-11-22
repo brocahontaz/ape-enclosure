@@ -3,9 +3,9 @@ const _ = new router({
   prefix: '/'
 })
 
-_.get('/', (ctx) => home(ctx))
+_.get('signin', (ctx) => signin(ctx))
 
-async function home(ctx){
+async function signin(ctx){
   console.log('yaya')
   ctx.body = 'hej'
 }
